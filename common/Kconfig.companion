@@ -1,0 +1,50 @@
+# Copyright (c) 2026 Nordic Semiconductor ASA
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+# Must match on nRF54 (sender) and nRF9151 (receiver) for a given build.
+
+menu "Companion thumbnail"
+
+choice COMPANION_THUMB_SIZE
+	prompt "Luma payload size (AXF1 image bytes)"
+	default COMPANION_THUMB_SIZE_256
+	help
+	  UDP/UART wire size is 24 bytes + this value (header + CRC).
+	  Use the same choice when building app-person and asset-tracker-template.
+
+config COMPANION_THUMB_SIZE_256
+	bool "256 bytes (16×16)"
+
+config COMPANION_THUMB_SIZE_512
+	bool "512 bytes (32×16)"
+
+config COMPANION_THUMB_SIZE_768
+	bool "768 bytes (32×24)"
+
+config COMPANION_THUMB_SIZE_1024
+	bool "1024 bytes (32×32)"
+
+endchoice
+
+config COMPANION_THUMB_BYTES
+	int
+	default 256 if COMPANION_THUMB_SIZE_256
+	default 512 if COMPANION_THUMB_SIZE_512
+	default 768 if COMPANION_THUMB_SIZE_768
+	default 1024 if COMPANION_THUMB_SIZE_1024
+
+config COMPANION_THUMB_W
+	int
+	default 16 if COMPANION_THUMB_SIZE_256
+	default 32 if COMPANION_THUMB_SIZE_512
+	default 32 if COMPANION_THUMB_SIZE_768
+	default 32 if COMPANION_THUMB_SIZE_1024
+
+config COMPANION_THUMB_H
+	int
+	default 16 if COMPANION_THUMB_SIZE_256
+	default 16 if COMPANION_THUMB_SIZE_512
+	default 24 if COMPANION_THUMB_SIZE_768
+	default 32 if COMPANION_THUMB_SIZE_1024
+
+endmenu
