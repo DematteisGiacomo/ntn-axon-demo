@@ -1,0 +1,6 @@
+[manifest]
+path = app-axon-person-detection
+file = west.yml
+
+[zephyr]
+base = zephyr
